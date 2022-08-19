@@ -3,7 +3,6 @@ import './App.css';
 import * as XLSX from 'xlsx';
 import {getDataPointsFromSpendList} from "./utils";
 import SpendChart from "./SpendChart";
-import {Transaction} from "./types";
 
 function App() {
     const onChange = (e: any) => {
@@ -17,11 +16,9 @@ function App() {
             const ws = wb.Sheets[wsname];
             const data = XLSX.utils.sheet_to_csv(ws);
             const transactionList = getDataPointsFromSpendList(data);
-            // transactionList.map((item: Transaction) => {
-            //     console.log(item.registrationDate);
-            // })
-            console.log(transactionList[0])
-            console.log(transactionList[transactionList.length - 1]);
+            transactionList.map((item: any) => {
+                console.log(item.transactionDate);
+            })
         };
         reader.readAsBinaryString(file);
     };

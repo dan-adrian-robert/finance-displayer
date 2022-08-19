@@ -15,16 +15,20 @@ const TRANSACTION_KEYS = [
     'description',
 ];
 //The start index of the transaction List;
-const TRANSACTION_INDEX = 20;
+const TRANSACTION_INDEX_START = 21;
+const TRANSACTION_INDEX_END = 790;
+
+export const stringToDate = (dateString: string) => {
+    const [day, month, year] = dateString.split('/');
+    return new Date(+year, +month - 1, +day);
+}
 
 export const getDataPointsFromSpendList = (data: any) => {
     let list = data.split('\n');
-    list = list.splice(TRANSACTION_INDEX, list.length);
-
+    list = list.splice(TRANSACTION_INDEX_START, TRANSACTION_INDEX_END - TRANSACTION_INDEX_START);
+    console.log(list);
     return list.map((item: string, index: number) => {
-        const transaction = getTransactionFromRow(item);
-        console.log(index, transaction.registrationDate);
-        return transaction;
+        return getTransactionFromRow(item);
     });
 }
 
@@ -38,7 +42,7 @@ export const getTransactionFromRow = (row: string): Transaction => {
     });
     let result = transaction as Transaction;
 
-    result.registrationDate = new Date(result.registrationDate);
-    result.transactionDate = new Date(result.transactionDate);
+    result.registrationDate = stringToDate(result.registrationDate);
+    result.transactionDate = stringToDate(result.transactionDate);
     return result;
 }
