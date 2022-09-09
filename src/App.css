@@ -1,5 +1,25 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 1em;
+}
+
+.chart > canvas {
+  aspect-ratio: auto;
+  height: 18em !important;
+  width: 32em !important;
+}
+
+.chart2 > canvas {
+  aspect-ratio: auto;
+  height: 42em !important;
+  width: 48em !important;
+}
+
+
+.spendTable {
+  height: 45vh !important;
 }
 
 .App-logo {
