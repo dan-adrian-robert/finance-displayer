@@ -28,3 +28,25 @@ export enum Category {
     PHARMA='PHARMA',
     GAMING='GAMING',
 }
+
+export interface TransactionState {
+    yearList: string[],
+    selectedYear: any,
+    transactionMap: {
+        [key: string]: Transaction[]
+    };
+}
+
+export const CATEGORY_LIST: Category[] = [
+    Category.FOOD,
+    Category.TRANSPORT,
+    Category.CASH_WITHDRAW,
+    Category.INVESTMENT,
+    Category.OTHER,
+    Category.SALARY,
+    Category.ENERGY,
+    Category.CHARITY,
+    Category.SAVINGS,
+    Category.PHARMA,
+    Category.GAMING,
+];

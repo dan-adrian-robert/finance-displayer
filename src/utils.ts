@@ -1,6 +1,7 @@
 import {Category, Transaction} from "./types";
 import moment from "moment";
 import {TOKEN_LIST} from "./tokens";
+import {MONTHS} from "./components/SpendByCategory";
 
 const TRANSACTION_KEYS = [
     'registrationDate',
@@ -19,8 +20,8 @@ const TRANSACTION_KEYS = [
 
 export const stringToDate = (dateString: string) => {
     const [day,month,year] = dateString.split('/');
-    const date =  moment([ year,  parseInt(month) - 1, day]);
-    return date;
+    // const date =  moment([ year,  parseInt(month) - 1, day]);
+    return new Date(parseInt(year), parseInt(month) - 1, parseInt(day)).getTime();
 }
 
 export const noSavingsTransactions = (item: Transaction) => {
@@ -61,10 +62,9 @@ export const getTransactionFromRow = (row: string): Transaction | null => {
     result.transactionDate = stringToDate(result.transactionDate);
     result.category = category;
 
-    if (!result.registrationDate.isValid()) {
+    if (isNaN(result.registrationDate)) {
         return null;
     }
-
     return result;
 }
 
@@ -81,4 +81,56 @@ export const getTransactionCategory = (transaction: any): Category => {
     }
 
     return Category.OTHER;
+}
+
+export const getTransactionInMonth = (yearTransactionList: Transaction[], month: number): Transaction[] => {
+    return yearTransactionList.filter((transaction: Transaction) => {
+        const date = moment(transaction.registrationDate);
+        return date.month() === month;
+    })
+}
+
+export const getTransactionByCategory = (transactionList: Transaction[], category: Category): Transaction[] => {
+    return transactionList.filter((transaction: Transaction) => {
+        return transaction.category === category;
+    })
+}
+
+export const getTransactionValue = (transaction: Transaction): number => {
+    return parseInt(transaction.debit ? transaction.debit: transaction.credit);
+}
+
+export const getSpendMap = (transactionList: Transaction[]) => {
+    const result: any = {};
+    transactionList.map((item: Transaction) => {
+        if (!result[item.category]) {
+            result[item.category] =  {
+                times: 1,
+                amount: getTransactionValue(item)
+            }
+        } else {
+            result[item.category].times += 1;
+            result[item.category].amount += getTransactionValue(item)
+        }
+        return null;
+    });
+    return result;
+}
+
+export const getTransactionByMonthForCategory = (transactionList: Transaction[], category: Category) => {
+    const resultList: number[] = [];
+
+    MONTHS.map((month:string, monthIndex: number) => {
+        const transactionInMonth: Transaction[] = getTransactionInMonth(transactionList, monthIndex);
+        const transactionByCategory = getTransactionByCategory(transactionInMonth, category);
+        let result = 0;
+        transactionByCategory.map((transaction: Transaction) => {
+            result += Number.parseInt(transaction.debit || 0);
+            return null;
+        });
+        resultList.push(result);
+        return null;
+    });
+
+    return resultList;
 }

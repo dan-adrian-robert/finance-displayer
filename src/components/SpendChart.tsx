@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -9,6 +9,10 @@ import {
     Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import {useSelector} from "react-redux";
+import {getTransactionList} from "../selectors";
+import {Transaction} from "../types";
+import moment from "moment";
 
 ChartJS.register(
     CategoryScale,
@@ -32,7 +36,7 @@ export const options = {
     },
 };
 
-const getDataset = (spendList: any[]) => {
+const getDataset = (spendList: Transaction[]) => {
     const labels = ['January', 'February', 'March', 'April', 'May', 'June',
                     'July', 'August', 'September', 'October', 'November', 'December'];
     return {
@@ -52,36 +56,52 @@ const getDataset = (spendList: any[]) => {
     }
 };
 
-const getSpendData= (month: string, monthIndex: number, spendList: any[]) => {
+const getSpendData= (month: string, monthIndex: number, spendList: Transaction[]) => {
     let result = 0;
-    spendList.map((item: any) => {
-       if (item.transactionDate.isValid()) {
-           const month = item.transactionDate.month();
+    spendList.map((item: Transaction) => {
+        const date = moment(item.transactionDate);
+       if (date.isValid()) {
+           const month = date.month();
            if (monthIndex === month) {
                result += Number.parseInt(item.debit || 0);
            }
        }
+       return null;
     });
     return result;
 }
 
-const getEarnData = (month: string, monthIndex: number, spendList: any[]) => {
+const getEarnData = (month: string, monthIndex: number, spendList: Transaction[]) => {
     let result = 0;
-    spendList.map(item => {
-        if (item.registrationDate.isValid()) {
-            const month = item.registrationDate.month();
+    spendList.map((item: Transaction) => {
+        const date = moment(item.registrationDate);
+
+        if (date.isValid()) {
+            const month = date.month();
             if (monthIndex === month) {
                 result += Number.parseInt(item.credit || 0);
             }
         }
+        return null;
     });
     return result;
 }
 
-export const SpendChart:FC<any> = ({spendList}) => {
-    const data = getDataset(spendList);
+export const SpendChart:FC<any> = () => {
+    const activeTransactionList = useSelector(getTransactionList);
+    const [data, setData] = useState<any>(null);
+
+    useEffect(() => {
+        const result = getDataset(activeTransactionList);
+        setData(result);
+    }, [activeTransactionList])
+
+    if (!data) {
+        return <div></div>
+    }
+
     return (
-        <div className='chart'>
+        <div style={{width: '42em', height: '42em'}}>
             <Bar options={options} data={data}/>
         </div>
     );
