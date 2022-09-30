@@ -1,30 +1,15 @@
-import {Category, Transaction} from "./types";
-import moment from "moment";
+import {Category, Month, Transaction} from "./types";
 import {TOKEN_LIST} from "./tokens";
-import {MONTHS} from "./components/SpendByCategory";
-
-const TRANSACTION_KEYS = [
-    'registrationDate',
-    'transactionDate',
-    'debit',
-    'credit',
-    'numOP',
-    'fiscalCode',
-    'ordination',
-    'finalBenefactor',
-    'targetName',
-    'bankName',
-    'accNumber',
-    'description',
-];
+import {DAYS, MONTHS, TRANSACTION_KEYS} from "./config/constants";
+import {filterTransactionByCategory, filterTransactionByDay, filterTransactionByMonth} from "./utils/filters";
+import {getTotalSpendAmount} from "./utils/transaction-wrappers";
 
 export const stringToDate = (dateString: string) => {
     const [day,month,year] = dateString.split('/');
-    // const date =  moment([ year,  parseInt(month) - 1, day]);
     return new Date(parseInt(year), parseInt(month) - 1, parseInt(day)).getTime();
 }
 
-export const noSavingsTransactions = (item: Transaction) => {
+export const noSavingsTransactions = (item: Transaction): boolean => {
     return item.targetName !== 'ADRIAN ROBERT DAN';
 }
 
@@ -75,6 +60,7 @@ export const getTransactionCategory = (transaction: any): Category => {
             return Category.OTHER;
         }
         const description = transaction.description;
+
         if (description.toLowerCase().includes(item.token.toLowerCase())) {
             return item.category;
         }
@@ -83,25 +69,13 @@ export const getTransactionCategory = (transaction: any): Category => {
     return Category.OTHER;
 }
 
-export const getTransactionInMonth = (yearTransactionList: Transaction[], month: number): Transaction[] => {
-    return yearTransactionList.filter((transaction: Transaction) => {
-        const date = moment(transaction.registrationDate);
-        return date.month() === month;
-    })
-}
-
-export const getTransactionByCategory = (transactionList: Transaction[], category: Category): Transaction[] => {
-    return transactionList.filter((transaction: Transaction) => {
-        return transaction.category === category;
-    })
-}
-
 export const getTransactionValue = (transaction: Transaction): number => {
     return parseInt(transaction.debit ? transaction.debit: transaction.credit);
 }
 
 export const getSpendMap = (transactionList: Transaction[]) => {
     const result: any = {};
+
     transactionList.map((item: Transaction) => {
         if (!result[item.category]) {
             result[item.category] =  {
@@ -109,7 +83,7 @@ export const getSpendMap = (transactionList: Transaction[]) => {
                 amount: getTransactionValue(item)
             }
         } else {
-            result[item.category].times += 1;
+            result[item.category].times = + 1;
             result[item.category].amount += getTransactionValue(item)
         }
         return null;
@@ -120,17 +94,26 @@ export const getSpendMap = (transactionList: Transaction[]) => {
 export const getTransactionByMonthForCategory = (transactionList: Transaction[], category: Category) => {
     const resultList: number[] = [];
 
-    MONTHS.map((month:string, monthIndex: number) => {
-        const transactionInMonth: Transaction[] = getTransactionInMonth(transactionList, monthIndex);
-        const transactionByCategory = getTransactionByCategory(transactionInMonth, category);
-        let result = 0;
-        transactionByCategory.map((transaction: Transaction) => {
-            result += Number.parseInt(transaction.debit || 0);
-            return null;
-        });
-        resultList.push(result);
+    MONTHS.map((month:Month, monthIndex: number) => {
+        const transactionInMonth: Transaction[] = filterTransactionByMonth(transactionList, monthIndex);
+        const transactionByCategory: Transaction[] = filterTransactionByCategory(transactionInMonth, category);
+        resultList.push(getTotalSpendAmount(transactionByCategory));
         return null;
     });
 
     return resultList;
 }
+
+export const getTransactionByDayInMonthForCategory = (transactionList: Transaction[], category: Category) => {
+    const resultList: number[] = [];
+
+    DAYS.map((day: number, dayIndex: number) => {
+        const transactionInMonth: Transaction[] = filterTransactionByDay(transactionList, day);
+        const transactionByCategory: Transaction[] = filterTransactionByCategory(transactionInMonth, category);
+        resultList.push(getTotalSpendAmount(transactionByCategory));
+        return null;
+    });
+
+    return resultList;
+}
+

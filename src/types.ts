@@ -18,7 +18,7 @@ export enum Category {
     FOOD='FOOD',
     TRANSPORT='TRANSPORT',
     CASH_WITHDRAW = 'CASH_WITHDRAW',
-    SHOPING = 'SHOPING',
+    SHOPPING = 'SHOPPING',
     INVESTMENT = 'INVESTMENT',
     OTHER = 'OTHER',
     SALARY='SALARY',
@@ -27,7 +27,19 @@ export enum Category {
     SAVINGS='SAVINGS',
     PHARMA='PHARMA',
     GAMING='GAMING',
+    ENTERTAINMENT='ENTERTAINMENT',
+    RENT='RENT',
+    REVOLUT='REVOLUT',
+    BANKING='BANKING',
 }
+
+export type SpendMap = {
+    [key in Category]: {
+        times: number,
+        amount: number,
+    }
+}
+
 
 export interface TransactionState {
     yearList: string[],
@@ -50,3 +62,8 @@ export const CATEGORY_LIST: Category[] = [
     Category.PHARMA,
     Category.GAMING,
 ];
+
+export interface Month {
+    index: number;
+    value: string;
+}

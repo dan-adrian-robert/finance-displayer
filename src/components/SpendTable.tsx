@@ -11,8 +11,7 @@ export const getDateValue = (row: any, key: string) => {
     return moment(row[key]).format('DD/MMMM yy');
 }
 
-export const SpendTable:FC<any> = () => {
-    // const yearList = useSelector(getYearList);
+export const TransactionList:FC<any> = () => {
     const activeTransactionList = useSelector(getTransactionList);
 
     const getPercentage = () => {
@@ -40,6 +39,7 @@ export const SpendTable:FC<any> = () => {
                         <TableRow>
                             <TableCell>Index</TableCell>
                             <TableCell>registrationDate</TableCell>
+                            <TableCell>month</TableCell>
                             <TableCell>Value</TableCell>
                             <TableCell>Description</TableCell>
                             <TableCell>Category</TableCell>
@@ -51,6 +51,7 @@ export const SpendTable:FC<any> = () => {
                                <TableRow key={keyIndex}>
                                    <TableCell>{keyIndex + 1}</TableCell>
                                    <TableCell>{getDateValue(row, 'registrationDate')}</TableCell>
+                                   <TableCell>{moment(row.registrationDate).month()}</TableCell>
                                    <TableCell>
                                        <span style={{color:row.credit?'#3dae23':'#e8464a', fontWeight:600}}>
                                         {row.credit ? row.credit:row.debit}

@@ -3,15 +3,17 @@ import './App.css';
 import {Box, Tab, Tabs} from "@mui/material";
 import {DataLoader} from "./components/DataLoader";
 import {useDispatch, useSelector} from 'react-redux'
-import {SpendTable} from "./components/SpendTable";
+import {TransactionList} from "./components/SpendTable";
 import {TransactionTypes} from "./components/TransactionTypes";
-import SpendChart from "./components/SpendChart";
 import {CustomSelector} from "./components/CustomSelector";
 import {getTransactions} from "./selectors";
 import {TransactionState} from "./types";
 import {setSelectedYear} from "./actions";
-import {TransactionByMonth} from "./components/TransactionByMonth";
 import {SpendByCategory} from "./components/SpendByCategory";
+import SpendView from "./views/SpendView";
+import SpendBubbleChartView from "./views/SpendBubbleChartView";
+import TypeCharView from "./views/TypeChartView";
+import {BreakDownView} from "./views/BreakDownView";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -80,19 +82,19 @@ function App() {
                 <DataLoader/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <SpendTable/>
+                <TransactionList/>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <SpendChart/>
+                <SpendView/>
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <TransactionTypes/>
+                <TypeCharView/>
             </TabPanel>
             <TabPanel value={value} index={4}>
-                <TransactionByMonth/>
+                <SpendBubbleChartView/>
             </TabPanel>
             <TabPanel value={value} index={5}>
-                <SpendByCategory/>
+                <BreakDownView/>
             </TabPanel>
         </Box>
     );
