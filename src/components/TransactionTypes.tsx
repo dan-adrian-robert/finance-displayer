@@ -2,8 +2,8 @@ import React, {FC, useEffect, useState} from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from "react-chartjs-2";
 import {getSpendMap} from "../utils";
-import {Category, Month, Transaction} from "../types";
-import {CATEGORY_COLOR, COLORS} from "../config/constants";
+import {Month, Transaction} from "../types";
+import {CATEGORY_COLOR } from "../config/constants";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -11,7 +11,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
     const labels: string[] = Object.keys(spendMap);
     const colorList: any[] = [];
     const data: any[] = labels.map((label:any) => {
-
+        console.log(label);
         colorList.push(CATEGORY_COLOR[label]);
         return spendMap[label].amount;
     });
@@ -20,7 +20,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
         labels,
         datasets: [
             {
-                label: '# of Votes',
+                label: '',
                 data: data,
                 backgroundColor: colorList,
                 borderColor: ['#2C3333'],
@@ -37,8 +37,6 @@ interface IProps {
 
 export const TransactionTypes:FC<IProps> = ({transactionList, month}) => {
     const [data, setData] = useState<any>(null);
-    const [typeList, setTypeList] = useState<any[]>([]);
-    const [selectedType, setSelectedType] = useState<string| number>('');
 
     useEffect(() => {
         const spendMap = getSpendMap(transactionList);
@@ -50,7 +48,7 @@ export const TransactionTypes:FC<IProps> = ({transactionList, month}) => {
         return <div>No Transaction Data</div>
     }
 
-    if(data.datasets[0].data.length === 0) {
+    if (data.datasets[0].data.length === 0) {
         return (
             <div>
                 <div>{month.value}</div>
@@ -62,10 +60,13 @@ export const TransactionTypes:FC<IProps> = ({transactionList, month}) => {
     return (
         <>
             <div>{month.value}</div>
-            <Doughnut data={data} options={{
-                responsive: true,
-                maintainAspectRatio: true,
-            }}/>
+            <Doughnut
+                data={data}
+                options={{
+                    responsive: true,
+                    maintainAspectRatio: true,
+                }}
+            />
         </>
 
     )

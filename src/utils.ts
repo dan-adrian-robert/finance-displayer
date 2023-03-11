@@ -41,6 +41,7 @@ export const getTransactionFromRow = (row: string): Transaction | null => {
     });
 
     const category: Category = getTransactionCategory(transaction);
+    console.log(category);
 
     let result = transaction as Transaction;
     result.registrationDate = stringToDate(result.registrationDate);

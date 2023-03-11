@@ -1,4 +1,4 @@
-import {Category, Transaction} from "../types";
+import {Category, Transaction, TransactionTye} from "../types";
 import moment from "moment";
 
 export const filterTransactionByMonth = (transactionList: Transaction[], month: number): Transaction[] => {
@@ -28,4 +28,19 @@ export const filterTransactionByYear = (transactionList: Transaction[], year: nu
         // return date.year() === year;
         return true;
     })
+}
+
+export const getTransactionByType = (transactionList: Transaction[], type: TransactionTye): Transaction[] => {
+    switch (type) {
+        case TransactionTye.EARNINGS:
+            return transactionList.filter((transaction: Transaction) => {
+                return transaction.credit > 0;
+            });
+        case TransactionTye.SPENDINGS:
+            return transactionList.filter((transaction: Transaction) => {
+                return transaction.debit > 0;
+            });
+        default:
+            return transactionList
+    }
 }

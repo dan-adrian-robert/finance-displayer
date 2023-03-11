@@ -52,6 +52,7 @@ export const MONTHS: Month[] = [
 ];
 
 export const YEARS = [2017, 2018, 2019, 2020, 2021, 2022]
+
 export const COLORS = [
     'rgba(255, 99, 132, 0.2)',
     // 'rgba(54, 162, 235, 0.2)',
@@ -66,6 +67,11 @@ export const COLORS = [
     '#420420',
 ];
 
+export const COLOR = {
+    GREEN: '#3dae23',
+    RED: '#e8464a'
+}
+
 export const CATEGORY_COLOR: any = {
     [Category.SALARY]: '#FC0049',
     [Category.FOOD]: '#FF5D1A',
@@ -74,17 +80,17 @@ export const CATEGORY_COLOR: any = {
     [Category.CASH_WITHDRAW]: '#0097D1',
     [Category.INVESTMENT]: '#6FBEDC',
 
-    [Category.OTHER]: '#6FBEDC',
-    [Category.CHARITY]: '#0097D1',
-    [Category.SAVINGS]: '#00C891',
-    [Category.PHARMA]: '#E7E860',
-    [Category.GAMING]: '#FF5D1A',
-    [Category.SHOPPING]: '#FC0049',
+    [Category.OTHER]: '#B20238',
+    [Category.CHARITY]: '#12A4D9',
+    [Category.SAVINGS]: '#0D1137',
+    [Category.PHARMA]: '#F5A9CB',
+    [Category.GAMING]: '#746AB0',
+    [Category.SHOPPING]: '#E389B9',
 
-    [Category.RENT]: '#00C891',
-    [Category.SHOPPING]: '#E7E860',
-    [Category.ENTERTAINMENT]: '#0097D1',
-    [Category.REVOLUT]: '#FF5D1A',
+    [Category.RENT]: '#FFC13B',
+    [Category.SHOPPING]: '#581845',
+    [Category.ENTERTAINMENT]: '#E84A5f',
+    [Category.REVOLUT]: '#288BA8',
 }
 
 export const TRANSACTION_KEYS = [
