@@ -1,0 +1,43 @@
+export const ColorMap = {
+    tcp:'#95BCB7',
+    iodine:'#5AB0A3',
+    spirit:'#528984',
+    cardolic:'#31625F',
+    cresote:'#2D4F51',
+
+    honey: '#AD6A95',
+    preserve: '#91446E',
+    sugary: '#963966',
+    toffee: '#863959' ,
+
+    treagle: '#D06DA3',
+    raisin: '#D5446D',
+    oried:  '#BA4862',
+    mime_fries: '#A53951',
+    fruit_cake:  '#8E364F',
+
+    cinnanon:'#D18746',
+    ginger:'#D66650',
+    tabacco:'#DE514A',
+    runner:'#C54A45',
+    chargomay:'#D34544',
+    blaclgrues:'#A64944',
+    random1:'#984732',
+
+    lished:'#D28044',
+    buttery:'#D39F39',
+    cooked_oil:'#CEBA59',
+    sweet:'#938362',
+    fudge:'#AD9E77',
+    cream_soda:'#B49E6F',
+    coconut:'#C9C0A3',
+
+    cablage:'#50934E',
+    sulfury:'#457B4A',
+    husty:'#3A7547',
+    g4:'#498B4E',
+    g3:'#3E7443',
+    g2:'#2E5A36',
+    g1:'#253F24',
+    mos:'#304D31',
+}

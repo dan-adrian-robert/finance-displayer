@@ -51,7 +51,7 @@ export const MONTHS: Month[] = [
     },
 ];
 
-export const YEARS = [2017, 2018, 2019, 2020, 2021, 2022]
+export const YEARS = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
 export const COLORS = [
     'rgba(255, 99, 132, 0.2)',
