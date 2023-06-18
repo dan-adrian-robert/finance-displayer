@@ -2,6 +2,11 @@ import {Category, Transaction, TransactionTye} from "../types";
 import moment from "moment";
 
 export const filterTransactionByMonth = (transactionList: Transaction[], month: number): Transaction[] => {
+
+    if (!transactionList) {
+        return [];
+    }
+
     return transactionList.filter((transaction: Transaction) => {
         const date = moment(transaction.registrationDate);
         return date.month() === month;

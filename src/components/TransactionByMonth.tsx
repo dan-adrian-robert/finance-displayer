@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, { FC } from "react";
 import {Chart as ChartJS, Tooltip, Legend, LinearScale, PointElement} from 'chart.js';
 import { Bubble } from "react-chartjs-2";
 import {Month, Transaction} from "../types";

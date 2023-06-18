@@ -43,7 +43,7 @@ const buildOptions = (title: string) => {
     }
 }
 
-const buildDataset = (transactionList: Transaction[], labels: string[]) => {
+export const buildDataset = (transactionList: Transaction[], labels: string[]) => {
     const datasets: any[] = [];
 
     CATEGORY_LIST.forEach((category: Category, index: number) => {

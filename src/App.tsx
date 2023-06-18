@@ -4,12 +4,10 @@ import {Box, Tab, Tabs} from "@mui/material";
 import {DataLoader} from "./components/DataLoader";
 import {useDispatch, useSelector} from 'react-redux'
 import {TransactionList} from "./components/SpendTable";
-import {TransactionTypes} from "./components/TransactionTypes";
 import {CustomSelector} from "./components/CustomSelector";
 import {getTransactions} from "./selectors";
 import {TransactionState} from "./types";
 import {setSelectedYear} from "./actions";
-import {SpendByCategory} from "./components/SpendByCategory";
 import SpendView from "./views/SpendView";
 import SpendBubbleChartView from "./views/SpendBubbleChartView";
 import TypeCharView from "./views/TypeChartView";

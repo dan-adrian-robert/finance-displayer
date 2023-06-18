@@ -7,6 +7,12 @@ import {YEARS} from "../config/constants";
 export const SpendView:FC<any> = () => {
     const transactionMap: any = useSelector(getTransactionMap);
 
+    console.log("transactionMap: ", transactionMap);
+
+    if (!transactionMap) {
+        return null;
+    }
+
     return (
         <div style={{display: 'flex', flexDirection: 'row', flexWrap:'wrap', gap:'2em'}}>
             {YEARS.map((year: number, yearKey) => {

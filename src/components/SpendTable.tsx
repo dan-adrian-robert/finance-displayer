@@ -66,7 +66,7 @@ export const TransactionList:FC<any> = () => {
            );
     };
 
-    if (activeTransactionList.length === 0) {
+    if (!activeTransactionList || activeTransactionList.length === 0) {
         return <div>There are no transactions yet</div>
     }
 

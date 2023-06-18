@@ -10,7 +10,6 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import {Transaction} from "../types";
-import moment from "moment";
 import {getMonthNames} from "../config/constants";
 import {filterTransactionByMonth} from "../utils/filters";
 import {getTotalGainedAmount, getTotalSpendAmount} from "../utils/transaction-wrappers";

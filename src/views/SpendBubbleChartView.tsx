@@ -10,6 +10,10 @@ export const SpendBubbleChartView:FC<any> = () => {
     const [monthList] = useState(MONTHS);
     const activeTransactionList: Transaction[] = useSelector(getTransactionList);
 
+    if (!transactionMap || !activeTransactionList || activeTransactionList.length === 0) {
+        return null;
+    }
+
     return (
         <div style={{display: 'flex', flexDirection: 'row', flexWrap:'wrap', gap:'2em'}}>
             {monthList.map((month: Month, monthIndex: number) => {
