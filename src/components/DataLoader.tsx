@@ -1,44 +1,59 @@
-import React, {FC, useEffect} from "react";
+import React, { useState } from "react";
+import {CustomFileInput} from "./CustomFileInput";
 import * as XLSX from "xlsx";
-import {getDataPointsFromSpendList} from "../utils";
-import {useDispatch} from "react-redux";
-import {setTransactions} from "../actions";
+import {convertWBtoJSON} from "../services/excel.service";
+import {updateStaticDB} from "../services/storage.service";
+import Snackbar from "@mui/material/Snackbar";
+import { Alert, Box } from "@mui/material";
 
-export const DataLoader:FC<any> = () => {
-    const dispatch = useDispatch();
+const styles: any = {
+    rowSize: {
+        display: 'flex',
+        gap: '8px',
+    },
+};
 
-    useEffect(() => {
-        const transactionString = localStorage.getItem('transactions');
-        if (transactionString) {
-            const transactionMap = JSON.parse(transactionString);
-            dispatch(setTransactions(transactionMap));
-        }
-
-    }, [dispatch]);
-
-    const onChange = (e: any) => {
-        const [file] = e.target.files;
+export const DataLoader:React.FC<{}> = () => {
+    const [messageOpen, setMessageOpen] = useState(false);
+    const [loadingFile, setLoadingFile] = useState(false)
+    const onChange = (event: any): void => {
+        const file = event.target.files[0];
+        setLoadingFile(true);
         const reader = new FileReader();
+        reader.onload = (fileEvent: any)=> {
+            const data = new Uint8Array(fileEvent.target.result);
+            const workbook: XLSX.WorkBook = XLSX.read(data, {type: 'array'});
 
-        reader.onload = (evt) => {
-            const byteStream = evt.target?.result;
-            const wb = XLSX.read(byteStream, { type: "binary"});
-            const result: any = {};
-            wb.SheetNames.map((sheetName: string) => {
-                const ws = wb.Sheets[sheetName];
-                const data = XLSX.utils.sheet_to_csv(ws);
-                result[sheetName] = getDataPointsFromSpendList(data);
-                return null;
-            })
-            localStorage.setItem('transactions', JSON.stringify(result));
-            dispatch(setTransactions(result));
+            const rawExcelData = convertWBtoJSON(workbook);
+            updateStaticDB(rawExcelData);
+            setMessageOpen(true);
+            setLoadingFile(false);
         };
-        reader.readAsBinaryString(file);
+
+        reader.readAsArrayBuffer(file);
+    };
+
+    const handleClose = () => {
+        setMessageOpen(false);
     };
 
    return (
-       <>
-           <input type="file" onChange={onChange}/>
-       </>
+       <Box sx={styles.rowSize}>
+           <Snackbar
+               anchorOrigin={{
+                   vertical: 'top',
+                   horizontal: 'right',
+               }}
+               open={messageOpen}
+               autoHideDuration={2000}
+               onClose={handleClose}
+           >
+               <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                   Successfully loaded data from Excel
+               </Alert>
+           </Snackbar>
+           <CustomFileInput onChange={onChange}/>
+           {loadingFile && <Box>Loading...</Box>}
+       </Box>
    )
 }
