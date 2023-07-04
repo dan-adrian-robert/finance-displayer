@@ -18,8 +18,6 @@ const styles = {
 export const SpendView:FC<any> = () => {
     const transactionMap: any = useSelector(getTransactionMap);
 
-    console.log("transactionMap: ", transactionMap);
-
     if (!transactionMap) {
         return null;
     }

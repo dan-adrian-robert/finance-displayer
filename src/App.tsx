@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import {Box} from "@mui/material";
-import {useDispatch} from 'react-redux'
 import {DashboardMenu} from "./components/DashboardMenu";
 import {DashboardContent} from "./components/DashboardContent";
 import {DashboardHeader} from "./components/DashboardHeader";
@@ -50,18 +49,6 @@ const styles = {
 }
 
 export const App = () => {
-    // const dispatch = useDispatch();
-    // const [value, setValue] = useState(0);
-    // const transactionData: TransactionState = useSelector(getTransactions);
-
-    // const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
-    //     setValue(newValue);
-    // };
-    //
-    // const onSelectChange = (event: any): void => {
-    //     dispatch(setSelectedYear(event.target.value));
-    // }
-
     return (
         <Box sx={styles.root} component={"div"}>
             <Box sx={styles.header}>

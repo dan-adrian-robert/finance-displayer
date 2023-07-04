@@ -3,12 +3,9 @@ import {
     Box,
     FormControl,
     InputLabel,
-    MenuItem,
-    Paper,
     Select,
     Table,
     TableBody,
-    TableCell,
     TableContainer,
     TableHead,
     TableRow
@@ -18,22 +15,46 @@ import {useSelector} from "react-redux";
 import {
    getTransactionList,
 } from "../selectors";
-import moment from "moment";
 import {COLOR} from "../config/constants";
 import {filterTransactionByCategory, getTransactionByType} from "../utils/filters";
+import { getDateValue } from "../utils/formaters";
+import {SMenuItem, SSelect, STableCell } from "./StyledComponents";
+import {YearSelector} from "./YearSelector";
 
-export const getDateValue = (row: any, key: string) => {
-    return moment(row[key]).format('DD/MMMM');
-}
-
-const filterStyle = {
-    display:'flex',
-    gap:'15px'
-}
-
-const selectStyle = {
-    color:'blue',
-    width: '15em',
+const styles = {
+    customCell : {
+        backgroundColor: '#121734',
+        color: 'white',
+    },
+    header: {
+        minWidth: 500,
+        backgroundColor: '#121734',
+    },
+    table: {
+        "::-webkit-scrollbar": {
+            width: '10px',
+        },
+        "::-webkit-scrollbar-thumb": {
+            backgroundColor: '#694AD6',
+            borderRadius: '5px',
+        },
+        "::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: '#694AD6',
+        },
+    },
+    filterSection: {
+        display:'flex',
+        gap:'15px'
+    },
+    customSelect: {
+        color:'blue',
+        width: '15em',
+    },
+    root: {
+        display: 'flex',
+        flexDirection:'column',
+        gap: '8px',
+    }
 }
 
 export const TransactionList:FC<any> = () => {
@@ -71,77 +92,78 @@ export const TransactionList:FC<any> = () => {
     }
 
    return (
-       <div>
-           <div>{getPercentage()}</div>
-           <Box sx={filterStyle}>
-               <FormControl variant="standard" sx={selectStyle}>
-                   <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                   <Select
-                       labelId="demo-simple-select-label"
-                       id="demo-simple-select"
+       <Box sx={styles.root}>
+           <YearSelector/>
+           <Box>{getPercentage()}</Box>
+           <Box sx={styles.filterSection}>
+               <FormControl variant="standard" sx={styles.customSelect}>
+                   <InputLabel id="type-label">Type</InputLabel>
+                   <SSelect
+                       labelId="type-label"
+                       id="type-label"
                        value={selectedTransactionType}
                        label="Category"
                        onChange={(selectChangeEvent) => {
                            onFormChange(selectChangeEvent)
                        }}
                    >
-                       <MenuItem value={TransactionTye.SPENDINGS}>{TransactionTye.SPENDINGS}</MenuItem>
-                       <MenuItem value={TransactionTye.EARNINGS}>{TransactionTye.EARNINGS}</MenuItem>
-                       <MenuItem value={TransactionTye.ALL}>{TransactionTye.ALL}</MenuItem>
-                   </Select>
+                       <SMenuItem value={TransactionTye.SPENDINGS}>{TransactionTye.SPENDINGS}</SMenuItem>
+                       <SMenuItem value={TransactionTye.EARNINGS}>{TransactionTye.EARNINGS}</SMenuItem>
+                       <SMenuItem value={TransactionTye.ALL}>{TransactionTye.ALL}</SMenuItem>
+                   </SSelect>
                </FormControl>
-               <FormControl variant="standard" sx={selectStyle}>
-                   <InputLabel id="demo-simple-select-label">Category</InputLabel>
+               <FormControl variant="standard" sx={styles.customSelect}>
+                   <InputLabel id="category-label">Category</InputLabel>
                    <Select
-                       labelId="demo-simple-select-label"
-                       id="demo-simple-select"
+                       labelId="category-label"
+                       id="category-label"
                        value={selectedCategory}
                        label="Category"
                        onChange={(selectChangeEvent) => {
                         setSelectedCategory(selectChangeEvent.target.value as any);
                        }}
                    >
-                       <MenuItem value={'ALL'}>ALL</MenuItem>
+                       <SMenuItem value={'ALL'}>ALL</SMenuItem>
                        {CATEGORY_LIST.map((category:Category, index) => {
-                           return (<MenuItem key={index} value={category}>{category}</MenuItem>)
+                           return (<SMenuItem key={index} value={category}>{category}</SMenuItem>)
                        })}
                    </Select>
                </FormControl>
            </Box>
-           <TableContainer component={Paper} className='spendTable'>
-                <Table stickyHeader sx={{ minWidth: 500 }} aria-label="custom pagination table">
+           <TableContainer component={Box} sx={styles.table}  className='spendTable'>
+                <Table stickyHeader sx={styles.header} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Index</TableCell>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Amount</TableCell>
-                            <TableCell>Category</TableCell>
-                            <TableCell>Description</TableCell>
+                            <STableCell>Index</STableCell>
+                            <STableCell>Date</STableCell>
+                            <STableCell>Amount</STableCell>
+                            <STableCell>Category</STableCell>
+                            <STableCell>Description</STableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody >
+                    <TableBody>
                         {getFilteredTransactionList().map((row: Transaction, keyIndex: number) => {
                            return(
                                <TableRow key={keyIndex}>
-                                   <TableCell>{keyIndex + 1}</TableCell>
-                                   <TableCell>{getDateValue(row, 'registrationDate')}</TableCell>
-                                   <TableCell>
+                                   <STableCell>{keyIndex + 1}</STableCell>
+                                   <STableCell>{getDateValue(row, 'registrationDate')}</STableCell>
+                                   <STableCell>
                                        <div style={{color:row.credit ? COLOR.GREEN: COLOR.RED , fontWeight:600}}>
                                             {row.credit ? row.credit:row.debit}
                                        </div>
-                                   </TableCell>
-                                   <TableCell>
+                                   </STableCell>
+                                   <STableCell>
                                        <div style={{color:row.category !== Category.OTHER ? COLOR.GREEN : COLOR.RED, fontWeight:600}}>
                                             {row.category}
                                        </div>
-                                   </TableCell>
-                                   <TableCell>{row.description}</TableCell>
+                                   </STableCell>
+                                   <STableCell>{row.description}</STableCell>
                                </TableRow>
                            )
                      })}
                     </TableBody>
                 </Table>
             </TableContainer>
-       </div>
+       </Box>
    )
 }

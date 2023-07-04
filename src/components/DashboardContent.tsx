@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Box } from "@mui/material";
 import {Route, Routes } from 'react-router-dom';
 import {DataLoader} from "./DataLoader";
@@ -8,6 +8,9 @@ import SpendView from "../views/SpendView";
 import TypeCharView from "../views/TypeChartView";
 import {BreakDownView} from "../views/BreakDownView";
 import SpendBubbleChartView from "../views/SpendBubbleChartView";
+import {getStaticDB} from "../services/storage.service";
+import {useDispatch} from "react-redux";
+import {setTransactions} from "../actions";
 
 const styles = {
     root: {
@@ -16,6 +19,11 @@ const styles = {
     },
 }
 export const DashboardContent= () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(setTransactions(getStaticDB()));
+    }, []);
 
     return (
         <Box sx={styles.root}>

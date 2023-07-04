@@ -1,4 +1,5 @@
 import {TransactionState} from "../types";
+import {setSelectedYear, setTransactions} from "../actions";
 
 const initialState: TransactionState = {
     yearList: [],
@@ -16,13 +17,12 @@ const buildTransactionState = (payload: any): TransactionState  => {
     }
 }
 
-
 export default function transactionReducer (state:TransactionState = initialState, action: any) {
     switch (action.type) {
-        case ('SET/TRANSACTIONS'): {
+        case (setTransactions.type): {
             return buildTransactionState(action.payload);
         }
-        case ('SET/SELECTED/YEAR'): {
+        case (setSelectedYear.type): {
             return {
                 ...state,
                 selectedYear: action.payload
