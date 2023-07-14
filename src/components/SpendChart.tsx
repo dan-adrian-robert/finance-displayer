@@ -71,7 +71,11 @@ export const SpendChart:FC<IProps> = ({transactionList, year}) => {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
-        setData(getDataset(transactionList, getMonthNames()));
+        if (transactionList && transactionList.length) {
+            getTotalSpendAmount(transactionList);
+            setData(getDataset(transactionList, getMonthNames()));
+        }
+
     }, [transactionList])
 
     if (!data) {

@@ -9,9 +9,9 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
  const buildChartData = (spendMap: any) => {
     const labels: string[] = Object.keys(spendMap);
+    console.log('labels: ', labels);
     const colorList: any[] = [];
     const data: any[] = labels.map((label:any) => {
-        console.log(label);
         colorList.push(CATEGORY_COLOR[label]);
         return spendMap[label].amount;
     });

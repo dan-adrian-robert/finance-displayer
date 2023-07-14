@@ -77,7 +77,7 @@ export const TransactionList:FC<any> = () => {
     const onFormChange = (event: any) => {
         setTransactionType(event.target.value as TransactionTye);
     }
-
+    //
     const getFilteredTransactionList = () => {
        return  selectedCategory === TransactionTye.ALL ?
            getTransactionByType(activeTransactionList, selectedTransactionType) :
@@ -94,7 +94,7 @@ export const TransactionList:FC<any> = () => {
    return (
        <Box sx={styles.root}>
            <YearSelector/>
-           <Box>{getPercentage()}</Box>
+           {/*<Box>{getPercentage()}</Box>*/}
            <Box sx={styles.filterSection}>
                <FormControl variant="standard" sx={styles.customSelect}>
                    <InputLabel id="type-label">Type</InputLabel>

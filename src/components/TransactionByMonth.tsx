@@ -31,7 +31,7 @@ export const getMaxTransactionInMonth = (transactionList: Transaction[]): number
         // if (item.debit) {
         //     console.log(item.debit);
         // }
-        if (parseInt(item.debit) > maxSpend) {
+        if (item.debit > maxSpend) {
             maxSpend = item.debit;
         }
     }
@@ -49,7 +49,7 @@ const buildData = (transactionList: Transaction[], month: Month) => {
     transactionList.map((transaction: Transaction) => {
         const date = moment(transaction.registrationDate);
         if (transaction.debit && date.month() === month.index - 1) {
-            spendMapByDay[date.date()] += parseInt(transaction.debit);
+            spendMapByDay[date.date()] += transaction.debit;
         }
         return null;
     })

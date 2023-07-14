@@ -11,6 +11,8 @@ import SpendBubbleChartView from "../views/SpendBubbleChartView";
 import {getStaticDB} from "../services/storage.service";
 import {useDispatch} from "react-redux";
 import {setTransactions} from "../actions";
+import { buildTransactionMap } from "../mappers/transaction.mapper";
+import {getTotalGainedAmount, getTotalSpendAmount} from "../utils/transaction-wrappers";
 
 const styles = {
     root: {
@@ -22,7 +24,15 @@ export const DashboardContent= () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setTransactions(getStaticDB()));
+        const rawTransactions: any = getStaticDB();
+
+        console.log(rawTransactions);
+
+        const transactionMap = buildTransactionMap(rawTransactions)
+
+        console.log(transactionMap);
+
+        dispatch(setTransactions(transactionMap));
     }, []);
 
     return (
