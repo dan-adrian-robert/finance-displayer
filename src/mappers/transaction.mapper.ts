@@ -1,6 +1,6 @@
-import {Category, Transaction, TransactionTye} from "../types";
+import {Category, Transaction } from "../types";
 import moment from "moment";
-import {TOKEN_LIST} from "../tokens";
+import {TOKEN_LIST} from "../config/tokens";
 import {numberConvertor} from "./convertors";
 
 export const getTransactionCategory = (transaction: any): Category => {

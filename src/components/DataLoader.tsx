@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import {CustomFileInput} from "./CustomFileInput";
 import * as XLSX from "xlsx";
 import {convertWBtoJSON} from "../services/excel.service";
-import {updateStaticDB} from "../services/storage.service";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert, Box } from "@mui/material";
+import {updateTransactionDB} from "../services/storage.service";
 
 const styles: any = {
     rowSize: {
@@ -25,7 +25,7 @@ export const DataLoader:React.FC<{}> = () => {
             const workbook: XLSX.WorkBook = XLSX.read(data, {type: 'array'});
 
             const rawExcelData = convertWBtoJSON(workbook);
-            updateStaticDB(rawExcelData);
+            updateTransactionDB(rawExcelData);
             setMessageOpen(true);
             setLoadingFile(false);
         };

@@ -3,16 +3,16 @@ import { Box } from "@mui/material";
 import {Route, Routes } from 'react-router-dom';
 import {DataLoader} from "./DataLoader";
 import {ROUTES} from "../config/routes";
-import {TransactionList} from "./SpendTable";
 import SpendView from "../views/SpendView";
 import TypeCharView from "../views/TypeChartView";
 import {BreakDownView} from "../views/BreakDownView";
 import SpendBubbleChartView from "../views/SpendBubbleChartView";
-import {getStaticDB} from "../services/storage.service";
 import {useDispatch} from "react-redux";
 import {setTransactions} from "../actions";
 import { buildTransactionMap } from "../mappers/transaction.mapper";
-import {getTotalGainedAmount, getTotalSpendAmount} from "../utils/transaction-wrappers";
+import {SpendListView} from "../views/SpendListView";
+import ColorEditorView from "../views/ColorEditorView";
+import {getTransactionDB} from "../services/storage.service";
 
 const styles = {
     root: {
@@ -24,7 +24,7 @@ export const DashboardContent= () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const rawTransactions: any = getStaticDB();
+        const rawTransactions: any = getTransactionDB();
 
         console.log(rawTransactions);
 
@@ -40,7 +40,8 @@ export const DashboardContent= () => {
             <Routes>
                 <Route index  element={<DataLoader/>} />
                 <Route path={ROUTES.loader} element={<DataLoader />}/>
-                <Route path={ROUTES.transactions} element={<TransactionList />}/>
+                <Route path={ROUTES.colorEditor} element={<ColorEditorView />}/>
+                <Route path={ROUTES.transactions} element={<SpendListView />}/>
                 <Route path={ROUTES.spending} element={<SpendView />}/>
                 <Route path={ROUTES.category} element={<TypeCharView />}/>
                 <Route path={ROUTES.breakdown} element={<SpendBubbleChartView />}/>

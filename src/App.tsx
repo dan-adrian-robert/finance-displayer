@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Box} from "@mui/material";
 import {DashboardMenu} from "./components/DashboardMenu";
 import {DashboardContent} from "./components/DashboardContent";
 import {DashboardHeader} from "./components/DashboardHeader";
+import {getConfigurationDB} from "./services/storage.service";
 
 const styles = {
     root: {
@@ -49,6 +50,11 @@ const styles = {
 }
 
 export const App = () => {
+    useEffect(() => {
+        const configurations = getConfigurationDB();
+        console.log(configurations);
+    },[]);
+
     return (
         <Box sx={styles.root} component={"div"}>
             <Box sx={styles.header}>

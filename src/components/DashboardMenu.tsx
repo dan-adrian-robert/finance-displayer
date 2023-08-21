@@ -6,6 +6,7 @@ import AddchartIcon from '@mui/icons-material/Addchart';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import LegendToggleIcon from '@mui/icons-material/LegendToggle';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { ROUTES } from '../config/routes';
@@ -15,6 +16,11 @@ const tabList: any[] = [
         text: 'Data Loader',
         icon: <DataObjectIcon color="primary"/>,
         route: ROUTES.loader,
+    },
+    {
+        text: 'Color Editor',
+        icon: <ColorLensIcon color="primary"/>,
+        route: ROUTES.colorEditor,
     },
     {
         text: 'Transactions',

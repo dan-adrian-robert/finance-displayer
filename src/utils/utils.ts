@@ -1,7 +1,7 @@
-import {Category, Month, Transaction} from "./types";
-import {DAYS, MONTHS} from "./config/constants";
-import {filterTransactionByCategory, filterTransactionByDay, filterTransactionByMonth} from "./utils/filters";
-import {getTotalSpendAmount} from "./utils/transaction-wrappers";
+import {Category, Month, Transaction} from "../types";
+import {DAYS, MONTHS} from "../config/constants";
+import {filterTransactionByCategory, filterTransactionByDay, filterTransactionByMonth} from "./filters";
+import {getTotalSpendAmount} from "./transaction-wrappers";
 
 export const getTransactionValue = (transaction: Transaction): number => {
     return transaction.debit ? transaction.debit: transaction.credit;

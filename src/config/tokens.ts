@@ -1,4 +1,4 @@
-import {Category} from "./types";
+import {Category} from "../types";
 
 export const TOKEN_LIST = [
     { token:'CARREFOUR', category: Category.FOOD},

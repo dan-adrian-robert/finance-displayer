@@ -1,4 +1,4 @@
-export const ColorMap = {
+export const ColorMap: any = {
     tcp:'#95BCB7',
     iodine:'#5AB0A3',
     spirit:'#528984',

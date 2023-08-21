@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import {Category, CATEGORY_LIST, Transaction} from "../types";
-import {getTransactionByDayInMonthForCategory, getTransactionByMonthForCategory} from "../utils";
+import {getTransactionByDayInMonthForCategory, getTransactionByMonthForCategory} from "../utils/utils";
 import {getCategoryColor} from "../utils/constant-wrappers";
 import {DAYS} from "../config/constants";
 
