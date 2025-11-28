@@ -64,6 +64,7 @@ export const CATEGORY_LIST: Category[] = [
     Category.GAMING,
     Category.CLUBBING,
     Category.SUBSCRIPTIONS,
+    Category.RENT,
 ];
 
 export interface Month {
