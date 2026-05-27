@@ -10,6 +10,7 @@ import {
     TableBody,
     TableCell,
     TableContainer,
+    TableFooter,
     TableHead,
     TableRow
 } from "@mui/material";
@@ -70,6 +71,12 @@ export const TransactionList:FC<any> = () => {
         return <div>There are no transactions yet</div>
     }
 
+    const filteredTransactions = getFilteredTransactionList();
+    const totalAmount = filteredTransactions.reduce(
+        (sum, row) => sum + Number(row.credit || row.debit || 0),
+        0
+    );
+
    return (
        <div>
            <div>{getPercentage()}</div>
@@ -120,7 +127,7 @@ export const TransactionList:FC<any> = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {getFilteredTransactionList().map((row: Transaction, keyIndex: number) => {
+                        {filteredTransactions.map((row: Transaction, keyIndex: number) => {
                            return(
                                <TableRow key={keyIndex}>
                                    <TableCell>{keyIndex + 1}</TableCell>
@@ -140,6 +147,15 @@ export const TransactionList:FC<any> = () => {
                            )
                      })}
                     </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TableCell colSpan={2} />
+                            <TableCell sx={{ fontWeight: 700 }}>
+                                {totalAmount.toFixed(2)}
+                            </TableCell>
+                            <TableCell colSpan={2} />
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </TableContainer>
        </div>

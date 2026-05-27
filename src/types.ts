@@ -32,7 +32,8 @@ export enum Category {
     REVOLUT='REVOLUT',
     BANKING='BANKING',
     SUBSCRIPTIONS='SUBSCRIPTIONS',
-    CLUBBING='CLUBBING'
+    CLUBBING='CLUBBING',
+    HOUSE_EXPENSES='HOUSE_EXPENSES'
 }
 
 export type SpendMap = {
